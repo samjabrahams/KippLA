@@ -17,9 +17,12 @@ setnames(col.dat,name.v)
 
 enr.dat.subset <- subset(enr.dat,
                          TYPE__C == 'College',
-                         select=c('ID','TYPE__C','SCHOOL__C'))
+                         select=c('STUDENT__C','TYPE__C','SCHOOL__C'))
 
-tier.merge <- merge(enr.dat.subset,col.dat,by='SCHOOL__C')
+col.dat.subset <- subset(col.dat,
+                         COMPETITIVENESS_INDEX__C != 0)
+
+tier.merge <- merge(enr.dat.subset,col.dat.subset,by='SCHOOL__C')
 
 p <- ggplot(tier.merge,aes(COMPETITIVENESS_INDEX__C)) 
 p <- p + geom_histogram()
